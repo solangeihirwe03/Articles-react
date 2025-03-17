@@ -1,10 +1,11 @@
 import React from 'react'
 import Container from '../components/styleComponent'
-import { Link } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useFormik } from 'formik'
 import * as Yup from "yup"
 import axiosInstance from '../utils/axios/axiosInstance'
 import localStorageUtil from '../utils/localStorage'
+import { useAuth } from '../utils/context/authContext'
 
 const validationSchema = Yup.object().shape({
     email: Yup.string()
@@ -15,9 +16,10 @@ const validationSchema = Yup.object().shape({
         .required('Password is required'),
 });
 
-const Login:React.FC
- = () => {
-
+const Login:React.FC= () => {
+    const navigate = useNavigate();
+    const location = useLocation();
+    const {login} = useAuth();
     const formik = useFormik({
         initialValues: {
             email: "",
@@ -27,8 +29,11 @@ const Login:React.FC
         onSubmit: async (value, { setSubmitting, setStatus }) => {
             try {
                 const response = await axiosInstance.post("/api/user/login", value);
-                console.log("Login successfully", response.data.data);
-                localStorageUtil.setItem("token", response.data.data.token)
+                const token = response.data.data.token;
+                login(token);
+
+                const from = location.state?.from?.pathname
+                navigate(from, {replace: true})
             } catch (error: any) {
                 setStatus({ success: false, error: error.message });
             } finally {

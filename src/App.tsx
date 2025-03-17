@@ -4,20 +4,30 @@ import Sidebar from "./components/sidebar"
 import ArticleDetail from "./pages/articleDetail"
 import Login from "./pages/login"
 import Signup from "./pages/signup"
+import { AuthProvider } from "./utils/context/authContext"
+import ProtectedRoutes from "./utils/protectedRoute/protectedRoute"
+import CreateArticle from "./pages/createArticle"
+
 function App() {
 
   return (
     <>
-      <Router>
-        <Routes>
-          <Route path="/" element={<MainLayout />}>
-            <Route index element={<Sidebar />} />
-            <Route path="/article/:articleId" element={<ArticleDetail />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-          </Route>
-        </Routes>
-      </Router>
+      <AuthProvider>
+        <Router>
+          <Routes>
+            <Route path="/" element={<MainLayout />}>
+              <Route index element={<Sidebar />} />
+              <Route path="/article/:articleId" element={<ArticleDetail />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route element={<ProtectedRoutes />}>
+                <Route path="/create-article" element={<CreateArticle />} />
+              </Route>
+            </Route>
+          </Routes>
+        </Router>
+      </AuthProvider>
+
     </>
 
   )

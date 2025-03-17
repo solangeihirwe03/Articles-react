@@ -38,6 +38,11 @@ const Sidebar = () => {
     return (
         <div>
             <Container>
+                <div className='flex justify-end'>
+                    <Link to={"/create-article"} className='text-right'>
+                        + Create Article
+                    </Link>
+                </div>
                 <div className='w-full flex flex-wrap gap-4'>
                     <ul className='bg-white px-8 py-4 w-1/3'>
                         <li className='py-2 flex items-center gap-2'>
