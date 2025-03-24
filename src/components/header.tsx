@@ -50,11 +50,11 @@ function Header() {
                 />
                 <div className='absolute bg-black bg-opacity-40 w-full h-[45vh] inset-0 z-10'></div>
                 <div className='absolute w-full z-20 text-white flex justify-between px-2 md:px-10 lg:px-20 py-2 font-semibold'>
-                    <h1
+                    <Link to={"/"}
                         className='text-3xl tracking-wider'
                     >
                         Aspire<span className='text-[#1E3A8A]'>TECH</span>
-                    </h1>
+                    </Link>
                     <Link to={"/login"} className='text-xl hidden md:block'>Login/Sign Up</Link>
                     <button
                         onClick={toogleMenu}

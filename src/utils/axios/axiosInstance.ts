@@ -5,7 +5,7 @@ const URL = "https://customer-care-technical-support.onrender.com/"
 const axiosInstance = axios.create({
     baseURL: `${URL}`,
     headers: {
-        "Content-Type": "app;ication/json"
+        "Content-Type": "application/json"
     }
 });
 
@@ -15,10 +15,8 @@ axiosInstance.interceptors.request.use(
         if(token) {
             config.headers.Authorization= `Bearer ${token}`
         }
-        if(config.data instanceof FormData){
-            config.headers["Content-Type"] = "multipart/form-data";
-        }else {
-        config.headers["Content-Type"]= "application/json";
+        if (config.data instanceof FormData) {
+            delete config.headers["Content-Type"];
         }
         return config;
     },

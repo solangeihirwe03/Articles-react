@@ -7,6 +7,7 @@ import Signup from "./pages/signup"
 import { AuthProvider } from "./utils/context/authContext"
 import ProtectedRoutes from "./utils/protectedRoute/protectedRoute"
 import CreateArticle from "./pages/createArticle"
+import UpdateArticle from "./pages/updateArticle"
 
 function App() {
 
@@ -22,6 +23,7 @@ function App() {
               <Route path="/signup" element={<Signup />} />
               <Route element={<ProtectedRoutes />}>
                 <Route path="/create-article" element={<CreateArticle />} />
+                <Route path="/update-article/:articleId" element={<UpdateArticle/>}/>
               </Route>
             </Route>
           </Routes>
