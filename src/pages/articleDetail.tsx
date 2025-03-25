@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import Container from '../components/styleComponent'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { IArticle } from '../utils/types/article';
 import axiosInstance from '../utils/axios/axiosInstance';
 import { Link } from 'react-router-dom';
-import edit from "/edit.svg"
+import edit from "/edit.svg";
+import remove from "/Remove.svg"
+
 
 const ArticleDetail = () => {
     const { articleId } = useParams();
     const [article, setArticle] = useState<IArticle | null>(null);
     const [loading, setLoading] = useState(true)
-    const [error, setError] = useState(null)
+    const [error, setError] = useState("");
+    const navigate = useNavigate()
 
     useEffect(() => {
         const fetchArticle = async () => {
@@ -25,16 +28,35 @@ const ArticleDetail = () => {
         }
         fetchArticle();
     }, [])
+    
+    const handleDelete = async () => {
+        if (!article) return;
+
+        setArticle(null);
+
+        try {
+            await axiosInstance.delete(`/api/article/delete-article/${articleId}`);
+            navigate('/');
+        } catch (err: any) {
+            setArticle(article);
+        }
+    };
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
     return (
-        <Container>            
+        <Container>
             <div className=''>
                 <h1>{article?.title}</h1>
-                <Link to={`/update-article/${article?.id}`}>
-                <img src={edit} alt="update" />
-                </Link>
+                <div>
+                    <Link to={`/update-article/${article?.id}`}>
+                        <img src={edit} alt="update" />
+                    </Link>
+                    <button onClick={handleDelete}>
+                        <img src={remove} alt="delete" />
+                    </button>
+                </div>
+
                 <img src={article?.imageUrl} alt={article?.title} />
                 <p>{article?.description}</p>
             </div>

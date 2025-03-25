@@ -24,9 +24,9 @@ const UpdateArticle = () => {
             try {
                 const response = await axiosInstance.get(`/api/article/user-get-article/${articleId}`)
                 setArticle(response.data.data.article)
-                setInitialData(response.data.data.article); // Save initial data
+                setInitialData(response.data.data.article); 
                 if (response.data.data.article.imageUrl) {
-                    setImagePreview(response.data.data.article.imageUrl); // Preview initial image
+                    setImagePreview(response.data.data.article.imageUrl);
                 }
             } catch (err: any) {
                 setError(err.message)
@@ -45,20 +45,17 @@ const UpdateArticle = () => {
         }));
     };
 
-    // Handle file input change (image selection)
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
             const file = e.target.files[0];
             setNewImage(file);
-            setImagePreview(URL.createObjectURL(file)); // Preview the selected image
+            setImagePreview(URL.createObjectURL(file)); 
         }
     };
 
-    // Handle form submission
     const handleUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        // Check if any field has been updated
         const isUpdated =
             article?.title !== initialData?.title ||
             article?.description !== initialData?.description ||
@@ -74,9 +71,9 @@ const UpdateArticle = () => {
         submissionData.append('description', article?.description!);
 
         if (newImage) {
-            submissionData.append('image', newImage); // Add new image if it's updated
+            submissionData.append('imageUrl', newImage);
         } else {
-            submissionData.append('imageUrl', article?.image!); // Keep the existing image if no update
+            submissionData.append('imageUrl', article?.image!);
         }
 
         try {
@@ -85,7 +82,7 @@ const UpdateArticle = () => {
             setImagePreview(response.data.data.updateArticle.imageUrl)
             console.log('Article updated:', response.data);
             alert('Article updated successfully!');
-            navigate(`/article/${articleId}`); // Redirect to the updated article page
+            navigate(`/article/${articleId}`);
         } catch (error) {
             console.error('Error updating article:', error);
             alert('Error updating article');

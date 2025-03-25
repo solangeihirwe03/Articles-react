@@ -46,18 +46,20 @@ const CreateArticle = () => {
         submissionData.append("description", data.description);
         if (data.image) {
             submissionData.append("imageUrl", data.image);
+        }else {
+            const defaultImage = '/default.png'; 
+            submissionData.append('imageUrl', defaultImage);  
         }
         for (let pair of submissionData.entries()) {
             console.log(pair[0], pair[1]); 
         }
 
         try {
-            // const response = 
-            await axiosInstance.post(
+            const response =  await axiosInstance.post(
                 "/api/article/create-article",
                 submissionData
             );
-            // console.log("Response:", response.data);
+            console.log("Response:", response.data);
             alert("Article created successfully!");
         } catch (error: any) {
             console.error("Error creating article:", error.message);
