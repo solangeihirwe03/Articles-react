@@ -14,4 +14,12 @@ export interface AuthContextType {
 }
 export interface AuthProviderProps {
     children: ReactNode;
-  }
+}
+
+export interface IComment {
+  id: string;
+  userId: string;
+  articleId: string;
+  comment: string;
+  createdAt: Date;
+}

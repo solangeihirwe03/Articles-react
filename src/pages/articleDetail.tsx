@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Container from '../components/styleComponent'
 import { useNavigate, useParams } from 'react-router-dom'
-import { IArticle } from '../utils/types/article';
+import { IArticle, IComment } from '../utils/types/article';
 import axiosInstance from '../utils/axios/axiosInstance';
 import { Link } from 'react-router-dom';
 import edit from "/edit.svg";
@@ -15,11 +15,14 @@ const ArticleDetail = () => {
     const [error, setError] = useState("");
     const navigate = useNavigate()
 
+    const [comments, setComments] = useState<IComment[]>([]);
+
     useEffect(() => {
         const fetchArticle = async () => {
             try {
                 const response = await axiosInstance.get(`/api/article/user-get-article/${articleId}`)
                 setArticle(response.data.data.article)
+                setComments(response.data.data.article.comments || []);
             } catch (err: any) {
                 setError(err.message)
             } finally {
@@ -28,7 +31,7 @@ const ArticleDetail = () => {
         }
         fetchArticle();
     }, [])
-    
+
     const handleDelete = async () => {
         if (!article) return;
 
@@ -46,19 +49,33 @@ const ArticleDetail = () => {
     if (error) return <p>Error: {error}</p>;
     return (
         <Container>
-            <div className=''>
-                <h1>{article?.title}</h1>
-                <div>
+            <div className='flex justify-center flex-col items-center mt-10'>
+                <h1 className='font-inknut text-lg font-semibold'>{article?.title}</h1>
+                <div className='flex justify-end w-full mb-6'>
                     <Link to={`/update-article/${article?.id}`}>
-                        <img src={edit} alt="update" />
+                        <img src={edit} alt="update" className='w-10' />
                     </Link>
                     <button onClick={handleDelete}>
-                        <img src={remove} alt="delete" />
+                        <img src={remove} alt="delete" className='w-10' />
                     </button>
                 </div>
 
-                <img src={article?.imageUrl} alt={article?.title} />
-                <p>{article?.description}</p>
+                <div className='flex gap-10 items-center justify-center'>
+                    <img src={article?.imageUrl} alt={article?.title} className='w-[40%] h-[65vh]' />
+                    <p className='w-[40%]'>{article?.description}</p>
+                </div>
+            </div>
+            <div className="flex justify-center flex-col pl-24">
+                <h2 className="text-lg font-semibold">Comments</h2>
+                {comments.length > 0 ? (
+                    comments.map((comment) => (
+                        <div key={comment.id} className="border-b py-2">
+                            <p>{comment.comment}</p>
+                        </div>
+                    ))
+                ) : (
+                    <p>No comments yet.</p>
+                )}
             </div>
         </Container>
     )

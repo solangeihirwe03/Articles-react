@@ -4,10 +4,10 @@ import Footer from '../components/footer';
 
 function MainLayout() {
   return (
-    <div className='bg-[#f1f1f1] h-screen flex flex-col justify-between'>
-        <Header/>
-        <Outlet/>
-        <Footer/>
+    <div className='bg-[#f6f6f6] flex flex-col justify-between font-inter'>
+      <Header />
+      <Outlet />
+      <Footer />
     </div>
   )
 }

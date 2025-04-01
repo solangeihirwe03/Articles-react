@@ -1,8 +1,7 @@
-import React from 'react'
 import styled from 'styled-components';
 
 const StyledContainer = styled.div `
-    padding: 4.5rem;
+    padding: 0 4.5rem 0.5rem;
 `
 
 const Container = ({ children }: any) => {

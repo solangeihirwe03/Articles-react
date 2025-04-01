@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import MainLayout from "./pages/mainLayout"
-import Sidebar from "./components/sidebar"
+import Home from "./pages/home"
 import ArticleDetail from "./pages/articleDetail"
 import Login from "./pages/login"
 import Signup from "./pages/signup"
@@ -17,7 +17,7 @@ function App() {
         <Router>
           <Routes>
             <Route path="/" element={<MainLayout />}>
-              <Route index element={<Sidebar />} />
+              <Route index element={<Home />} />
               <Route path="/article/:articleId" element={<ArticleDetail />} />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
