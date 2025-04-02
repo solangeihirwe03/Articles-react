@@ -9,9 +9,9 @@ const MobileMenu: React.FC = () => {
         <div className='bg-[#9c9c9c] mobile-nav'>
             <nav className='flex flex-col gap-8 text-lg font-semibold px-10 text-white'>
                 <NavLink to={'/'}>Home</NavLink>
-                <NavLink to={'/'}>About Us</NavLink>
+                <NavLink to={'/about-me'}>About Us</NavLink>
                 <NavLink to={'/create-article'}>article</NavLink>
-                <NavLink to={'/'}>Contact Us</NavLink>
+                <NavLink to={'/contact-us'}>Contact Us</NavLink>
                 <NavLink to={"/login"}>Login</NavLink>
             </nav>
             <div className='bg-white border border-[#1E3A8A] rounded-[22px] flex justify-center items-center text-[#1E1E1E]'>
@@ -75,9 +75,9 @@ function Header() {
             <div className='md:mt-56 lg:mt-72 xl:mt-[24rem] 2xl:mt-[16rem] md:flex justify-between md:px-10 lg:px-20 hidden'>
                 <nav className='flex gap-8 text-lg lg:text-xl font-semibold '>
                     <NavLink to={'/'}>Home</NavLink>
-                    <NavLink to={'/'}>About Us</NavLink>
+                    <NavLink to={'/about-me'}>About Us</NavLink>
                     <NavLink to={'/create-article'}>article</NavLink>
-                    <NavLink to={'/'}>Contact Us</NavLink>
+                    <NavLink to={'/contact-us'}>Contact Us</NavLink>
                 </nav>
                 <div className='bg-white border border-[#1E3A8A] rounded-[22px] flex justify-center items-center text-[#1E1E1E]'>
                     <input

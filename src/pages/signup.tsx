@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Container from '../components/styleComponent'
 import { Link, useNavigate } from 'react-router-dom'
 import { useFormik } from 'formik'
@@ -8,7 +8,6 @@ import { IUser } from '../utils/types/user'
 
 const Signup: React.FC = () => {
     const navigate = useNavigate();
-    const [touched, setTouched] = useState<{ [key: string]: boolean }>({})
     const formik = useFormik<IUser>({
         initialValues: {
             email: "",
@@ -48,7 +47,7 @@ const Signup: React.FC = () => {
                                 value={formik.values.email}
                                 className='border-[#1E3A8A] border-[1.5px] px-2 py-2 outline-none rounded-lg w-[20vw]'
                             />
-                            {touched.email && formik.errors.email ? (
+                            {formik.touched.email && formik.errors.email ? (
                                 <div>{formik.errors.email}</div>
                             ) : null}
                         </div>
@@ -62,7 +61,7 @@ const Signup: React.FC = () => {
                                 onBlur={formik.handleBlur}
                                 className='border-[#1E3A8A] border-[1.5px] px-2 py-2 outline-none rounded-lg w-[20vw]'
                             />
-                            {touched.password && formik.errors.password ? (
+                            {formik.touched.password && formik.errors.password ? (
                                 <div>{formik.errors.password}</div>
                             ) : null}
                         </div>

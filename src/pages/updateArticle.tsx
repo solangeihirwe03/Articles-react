@@ -4,6 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { IArticle } from '../utils/types/article'
 import axiosInstance from '../utils/axios/axiosInstance'
 import { FormValues } from './createArticle'
+import Popup from '../components/popUp'
 
 const UpdateArticle = () => {
     const { articleId } = useParams<{ articleId: string }>();
@@ -13,8 +14,11 @@ const UpdateArticle = () => {
         description: "",
         image: null
     });
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
+    const [popup, setPopup] = useState<{
+        show: boolean;
+        type: 'success' | 'error';
+        message: string;
+    } | null>(null);
     const [initialData, setInitialData] = useState<IArticle | null>(null);
     const [newImage, setNewImage] = useState<File | null>(null);
     const [imagePreview, setImagePreview] = useState<string | null>(null);
@@ -29,9 +33,11 @@ const UpdateArticle = () => {
                     setImagePreview(response.data.data.article.imageUrl);
                 }
             } catch (err: any) {
-                setError(err.message)
-            } finally {
-                setLoading(false)
+                setPopup({
+                    show:true,
+                    type: "error",
+                    message:err.message
+                })
             }
         }
         fetchArticle();
@@ -62,7 +68,11 @@ const UpdateArticle = () => {
             newImage !== null;
 
         if (!isUpdated) {
-            alert('You must update at least one field (title, description, or image).');
+            setPopup({
+                show: true,
+                type: "error",
+                message:'You must update at least one field (title, description, or image).'
+            });
             return;
         }
 
@@ -79,15 +89,30 @@ const UpdateArticle = () => {
             console.log(response.data.data.updateArticle)
             setArticle(response.data.data.updateArticle)
             setImagePreview(response.data.data.updateArticle.imageUrl || imagePreview);
-            alert('Article updated successfully!');
+            setPopup({
+                show: true,
+                type: "error",
+                message:'Article updated successfully!'
+            });
             navigate(`/article/${articleId}`);
         } catch (error) {
-            alert('Error updating article');
+            setPopup({
+                show:true,
+                type:"error",
+                message:'Error updating article'
+            });
         }
     };
 
     return (
         <Container>
+            {popup && (
+                <Popup
+                    type={popup.type}
+                    message={popup.message}
+                    onClose={() => setPopup(null)}
+                />
+            )}
             <form
                 className=''
                 onSubmit={handleUpdate}

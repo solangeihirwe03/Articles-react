@@ -28,8 +28,8 @@ function Footer() {
       <div className='w-1/3'>
         <h1 className='font-semibold text-xl pb-5'>Quick links</h1>
         <div className='flex flex-col gap-1'>
-          <NavLink to={"/"}>About us</NavLink>
-          <NavLink to={"/"}>Contact us</NavLink>
+          <NavLink to={"/about-me"}>About us</NavLink>
+          <NavLink to={"/contact-us"}>Contact us</NavLink>
           <NavLink to={"/"}>Privacy policy</NavLink>
           <NavLink to={"/"}>Terms of use</NavLink>
         </div>

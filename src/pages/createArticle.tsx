@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Container from '../components/styleComponent'
 import axiosInstance from '../utils/axios/axiosInstance';
 import image from "/default.jpg"
+import Popup from '../components/popUp';
 
 export interface FormValues {
     title: string;
@@ -17,6 +18,11 @@ const CreateArticle = () => {
         image: null,
         imagePreview: ""
     });
+    const [popup, setPopup] = useState<{
+        show: boolean;
+        type: 'success' | 'error';
+        message: string;
+    } | null>(null);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
@@ -55,16 +61,12 @@ const CreateArticle = () => {
         submissionData.append("title", data.title);
         submissionData.append("description", data.description);
         let imageToSend = data.image;
-
-        // If no image selected, use default image
         if (!imageToSend) {
-            // Convert the imported default image to a File object
             imageToSend = await urlToFile(
                 image,
                 'default-article-image.png',
                 'image/png'
             );
-            // Set preview for visual feedback
             setData(prev => ({
                 ...prev,
                 imagePreview: image
@@ -77,14 +79,29 @@ const CreateArticle = () => {
                 "/api/article/create-article",
                 submissionData
             );
-            alert("Article created successfully!");
+            setPopup({
+                show:true,
+                type:"success",
+                message:"Article created successfully!"
+            });
         } catch (error: any) {
-            alert("Error creating article");
+            setPopup({
+                show: true,
+                type: "error",
+                message: "Error creating article"}
+            );
         }
     };
 
     return (
         <Container>
+            {popup && (
+                <Popup
+                    type={popup.type}
+                    message={popup.message}
+                    onClose={() => setPopup(null)}
+                />
+            )}
             <form onSubmit={handleSubmit}>
                 <h1 className='text-2xl font-semibold text-[#1E3A8A] mb-6 text-center'>Create article</h1>
                 <div className='bg-white max-w-[70%] mx-auto p-6  rounded-lg shadow-md text-gray-900'>

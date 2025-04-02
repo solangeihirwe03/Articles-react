@@ -1,30 +1,35 @@
-import React, {useEffect} from "react";
-interface PopupProps {
-    message: string;
-    type: "success" | "error"; // Success or Error message
-    onClose: () => void;
-}
+import { useEffect } from 'react';
+import { FaCheckCircle, FaTimesCircle, FaTimes } from 'react-icons/fa';
 
-const Popup: React.FC<PopupProps> = ({ message, type, onClose }) => {
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            onClose();
-        }, 3000); 
+type PopupProps = {
+  type: 'success' | 'error';
+  message: string;
+  onClose: () => void;
+  duration?: number;
+};
 
-        return () => clearTimeout(timer);
-    }, [onClose]);
+const Popup = ({ type, message, onClose, duration = 3000 }: PopupProps) => {
+  useEffect(() => {
+    const timer = setTimeout(onClose, duration);
+    return () => clearTimeout(timer);
+  }, [duration, onClose]);
 
-    return (
-        <div className={`absolute top-0 left-0 w-full flex justify-center`}>
-            <div 
-                className={`w-full p-4 rounded-lg shadow-lg text-black ${type === "error" ? "border-red-500 bg-white" : "border-green-500 bg-white "} border-2`}>
-                <p className="font-semibold">{message}</p>
-                <button onClick={onClose} className="mt-2 bg-white text-black px-4 py-2 rounded">
-                    Close
-                </button>
-            </div>
-        </div>
-    );
+  return (
+    <div className={`fixed top-2 right-[34rem] z-50 p-4 rounded-md shadow-lg bg-white 
+      ${type === 'success' ? ' text-green-800 border-green-800' : ' text-red-800 border-red-800'}`}>
+      <div className="flex items-center gap-3">
+        {type === 'success' ? (
+          <FaCheckCircle className="text-xl" />
+        ) : (
+          <FaTimesCircle className="text-xl" />
+        )}
+        <span>{message}</span>
+        <button onClick={onClose} className="ml-2">
+          <FaTimes />
+        </button>
+      </div>
+    </div>
+  );
 };
 
 export default Popup;
