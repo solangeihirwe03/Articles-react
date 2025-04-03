@@ -43,7 +43,6 @@ function Header() {
         setIsMenuOpen(!isMenuOpen)
     }
     const[searchTerm, setSearchTerm] = useState("");
-    const [searchResults, setSearchResults]= useState<IArticle[]>([]);
     const navigate = useNavigate();
     const [articles, setArticles] = useState<IArticle[]>([]);
 
@@ -57,8 +56,7 @@ function Header() {
 
     const handleSearch = ()=>{
         if(searchTerm.trim()){
-            const results =searchArticles(articles, searchTerm)
-            setSearchResults(results)
+            searchArticles(articles, searchTerm)
             navigate("/search-results", { 
       state: { 
         allArticles: articles,
