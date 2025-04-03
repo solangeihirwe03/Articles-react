@@ -1,8 +1,11 @@
-import React from 'react';
-import { NavLink, Link } from 'react-router-dom'
+import React, { useEffect } from 'react';
+import { NavLink, Link, useNavigate } from 'react-router-dom'
 import { IoIosSearch } from "react-icons/io";
 import { AiOutlineMenu } from "react-icons/ai";
 import { useState } from 'react';
+import { IArticle } from '../utils/types/article';
+import axiosInstance from '../utils/axios/axiosInstance';
+import { searchArticles } from '../utils/search';
 
 const MobileMenu: React.FC = () => {
     return (
@@ -39,6 +42,38 @@ function Header() {
     const toogleMenu = () => {
         setIsMenuOpen(!isMenuOpen)
     }
+    const[searchTerm, setSearchTerm] = useState("");
+    const [searchResults, setSearchResults]= useState<IArticle[]>([]);
+    const navigate = useNavigate();
+    const [articles, setArticles] = useState<IArticle[]>([]);
+
+    useEffect(()=>{
+        const fetchArticles = async () => {
+                const response = await axiosInstance.get("/api/article/all-articles");
+                setArticles(response.data.data.articles)
+        };
+        fetchArticles();
+    },[])
+
+    const handleSearch = ()=>{
+        if(searchTerm.trim()){
+            const results =searchArticles(articles, searchTerm)
+            setSearchResults(results)
+            navigate("/search-results", { 
+      state: { 
+        allArticles: articles,
+        searchTerm 
+      } 
+    });
+        }
+    }
+
+    const handleKeyDown = (e: React.KeyboardEvent) => {
+        if (e.key === 'Enter') {
+          handleSearch();
+        }
+      };
+    
 
     return (
         <div className='flex flex-col w-full desktop-nav'>
@@ -83,11 +118,15 @@ function Header() {
                     <input
                         type="search"
                         name='search'
+                        value={searchTerm}
+                        onChange={(e)=>setSearchTerm(e.target.value)}
+                        onKeyDown={handleKeyDown}
                         placeholder='search here...'
-                        className='outline-none border-none px-4 bg-transparent'
+                        className='outline-none border-none px-4 bg-transparent bg-none'
                     />
                     <button
                         className='bg-[#1E3A8A] px-2 py-2 rounded-r-[22px]'
+                        onClick={handleSearch}
                         aria-label='search-button'
                     >
                         <IoIosSearch color='white' />
