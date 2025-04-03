@@ -10,6 +10,7 @@ import CreateArticle from "./pages/createArticle"
 import UpdateArticle from "./pages/updateArticle"
 import ContactUs from "./pages/contactUs"
 import AboutMe from "./pages/aboutMe"
+import Search from "./pages/search"
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
           <Routes>
             <Route path="/" element={<MainLayout />}>
               <Route index element={<Home />} />
+              <Route path="/search-results" element={<Search/>}/>
               <Route path="/article/:articleId" element={<ArticleDetail />} />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
