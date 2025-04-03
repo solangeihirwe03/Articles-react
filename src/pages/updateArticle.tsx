@@ -86,7 +86,6 @@ const UpdateArticle = () => {
 
         try {
             const response = await axiosInstance.put(`/api/article/update-article/${articleId}`, submissionData);
-            console.log(response.data.data.updateArticle)
             setArticle(response.data.data.updateArticle)
             setImagePreview(response.data.data.updateArticle.imageUrl || imagePreview);
             setPopup({
