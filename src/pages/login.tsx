@@ -42,36 +42,36 @@ const Login: React.FC = () => {
     })
     return (
         <Container>
-            <div className="flex justify-center items-center w-full mt-16">
-                <div className='w-[70%] rounded-xl bg-white h-[60vh] flex gap-12 items-center'>
-                    <div className='bg-[#111C3B] h-[60vh] rounded-l-xl w-1/2 text-white flex items-center justify-center text-5xl font-semibold'>
+            <div className="flex justify-center items-center w-full md:px-8 mt-16 md:mt-8">
+                <div className='w-full xl:w-[70%] rounded-xl bg-white md:h-[60vh] flex gap:4 lg:gap-12 items-center flex-col md:flex-row'>
+                    <div className='bg-[#111C3B] h-[40vh] md:h-[60vh] rounded-t-xl md:rounded-l-xl md:rounded-tr-none w-full md:w-1/2 text-white flex items-center justify-center text-5xl font-semibold'>
                         Login in
                     </div>
-                    <form className='w-1/2 py-12' onSubmit={formik.handleSubmit}>
-                        <div className='flex flex-col gap-1 pb-2'>
-                            <label htmlFor="email">Your email</label>
+                    <form className=' w-full md:w-1/2 md:py-12 mt-2 md:px-5' onSubmit={formik.handleSubmit}>
+                        <div className='flex flex-col gap-1 mb-4 md:pb-2 px-2'>
+                            <label htmlFor="email" className='lg:text-lg'>Your email</label>
                             <input
                                 type="email"
                                 name='email'
                                 value={formik.values.email}
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
-                                className='border-[#1E3A8A] border-[1.5px] px-2 py-2 rounded-lg w-[20vw] outline-none'
+                                className='border-[#1E3A8A] border-[1.5px] px-2 py-2 rounded-lg xl:w-[20vw] outline-none '
                             />
                         </div>
-                        <div className='flex flex-col gap-1 pb-2'>
-                            <label htmlFor="password">Your password</label>
+                        <div className='flex flex-col gap-1 pb-4 md:pb-2 px-2'>
+                            <label htmlFor="password" className='lg:text-lg'>Your password</label>
                             <input
                                 type="password"
                                 name='password'
                                 value={formik.values.password}
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
-                                className='border-[#1E3A8A] border-[1.5px] px-2 py-2 rounded-lg w-[20vw]'
+                                className='border-[#1E3A8A] border-[1.5px] px-2 py-2 rounded-lg xl:w-[20vw]'
                             />
                         </div>
-                        <button className='cursor-pointer bg-[#1E3A8A] p-2 w-[20vw] mt-2 rounded-lg text-white text-md' type='submit' disabled={formik.isSubmitting}>Login</button>
-                        <div className='flex gap-2 pl-3 mt-3'>
+                        <button className='cursor-pointer bg-[#1E3A8A] p-2 w-[90vw] md:w-[35vw] xl:w-[20vw] mt-2 rounded-lg text-white text-md mx-2 lg:text-xl lg:w-[37vw]' type='submit' disabled={formik.isSubmitting}>Login</button>
+                        <div className='flex gap-2 pl-3 my-3 md:mt-6  lg:text-lg'>
                             <p>don't have account?</p>
                             <Link to="/signup" className='hover:underline hover:text-blue-600'>Sign up</Link>
                         </div>

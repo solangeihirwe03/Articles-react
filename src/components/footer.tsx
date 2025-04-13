@@ -8,8 +8,8 @@ import { NavLink } from 'react-router-dom';
 
 function Footer() {
   return (
-    <div className='px-20 mt-10 bg-[#B9B9B9] h-[40vh] w-full py-2 flex justify-between items-center'>
-      <div className=' w-1/3'>
+    <div className='px-6 lg:px-20 mt-6 static bottom-0 bg-[#B9B9B9] lg:h-[40vh] w-full py-2 flex justify-between lg:items-center flex-col overflow-auto md:flex-row'>
+      <div className='md:w-1/3'>
         <h1
           className='text-3xl tracking-wider pb-7'
         >
@@ -25,7 +25,7 @@ function Footer() {
           </div>
         </div>
       </div>
-      <div className='w-1/3'>
+      <div className='md:w-1/3'>
         <h1 className='font-semibold text-xl pb-5'>Quick links</h1>
         <div className='flex flex-col gap-1'>
           <NavLink to={"/about-me"}>About us</NavLink>
@@ -34,9 +34,9 @@ function Footer() {
           <NavLink to={"/"}>Terms of use</NavLink>
         </div>
       </div>
-      <div className='w-1/3'>
+      <div className='md:w-1/3'>
         <p className='pb-5 font-medium'>About tech career & development</p>
-        <p>
+        <p className="md:text-sm">
           We are dedicated to helping tech professionals grow their careers through insightful articles,
           advice, and resources. Stay updated with the latest trends, career tips, and development insights
           to take your skills to the next level.

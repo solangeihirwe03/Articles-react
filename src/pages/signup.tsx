@@ -32,12 +32,12 @@ const Signup: React.FC = () => {
     return (
         <Container>
             <div className="flex justify-center items-center w-full mt-16">
-                <div className='w-[70%] rounded-xl h-[60vh] flex gap-12 bg-white items-center'>
-                    <div className='bg-[#111C3B] h-[60vh] rounded-l-xl w-1/2 text-white flex items-center justify-center text-5xl font-semibold'>
+                <div className='w-full lg:w-[70%] rounded-xl md:h-[60vh] flex lg:gap-12 bg-white items-center flex-col md:flex-row'>
+                    <div className='bg-[#111C3B] h-[35vh] md:h-[60vh] rounded-t-xl md:rounded-l-xl md:rounded-tr-none w-full md:w-1/2 text-white flex items-center justify-center text-5xl font-semibold'>
                         Sign up
                     </div>
-                    <form className=' py-12 w-1/2' onSubmit={formik.handleSubmit}>
-                        <div className='flex flex-col gap-1 pb-2 '>
+                    <form className='w-full px-4 py-6 md:py-12 md:w-1/2' onSubmit={formik.handleSubmit}>
+                        <div className='flex flex-col gap-1 pb-4 '>
                             <label htmlFor="email">Your email</label>
                             <input
                                 type="email"
@@ -45,13 +45,13 @@ const Signup: React.FC = () => {
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
                                 value={formik.values.email}
-                                className='border-[#1E3A8A] border-[1.5px] px-2 py-2 outline-none rounded-lg w-[20vw]'
+                                className='border-[#1E3A8A] border-[1.5px] px-2 py-2 outline-none rounded-lg lg:w-[20vw]'
                             />
                             {formik.touched.email && formik.errors.email ? (
                                 <div>{formik.errors.email}</div>
                             ) : null}
                         </div>
-                        <div className='flex flex-col gap-1 pb-2'>
+                        <div className='flex flex-col gap-1 pb-4'>
                             <label htmlFor="password">Your password</label>
                             <input
                                 type="password"
@@ -59,7 +59,7 @@ const Signup: React.FC = () => {
                                 value={formik.values.password}
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
-                                className='border-[#1E3A8A] border-[1.5px] px-2 py-2 outline-none rounded-lg w-[20vw]'
+                                className='border-[#1E3A8A] border-[1.5px] px-2 py-2 outline-none rounded-lg lg:w-[20vw]'
                             />
                             {formik.touched.password && formik.errors.password ? (
                                 <div>{formik.errors.password}</div>
@@ -67,7 +67,7 @@ const Signup: React.FC = () => {
                         </div>
                         <button
                             type='submit'
-                            className='cursor-pointer bg-[#1E3A8A] p-2 w-[20vw] rounded-lg text-white text-md mt-2'
+                            className='cursor-pointer bg-[#1E3A8A] p-2 w-[84vw] md:w-[42vw] lg:w-[20vw] rounded-lg text-white text-md mt-2'
                         >
                             Sign up
                         </button>
