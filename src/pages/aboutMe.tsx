@@ -4,10 +4,9 @@ import Container from '../components/styleComponent';
 const AboutMe = () => {
     return (
         <Container>
-            <div className="flex justify-center my-8"> {/* Centering container */}
-                <aside className="bg-gray-50 p-6 rounded-lg border-l-4 border-blue-500 w-full max-w-[70%] shadow-xl"> {/* 70% width */}
-                    <div className="flex items-start space-x-4">
-                        {/* Author avatar placeholder */}
+            <div className="flex justify-center my-32 md:my-12">
+                <aside className="bg-gray-50 p-6 rounded-lg border-l-4 border-blue-500 w-full md:max-w-[70%] shadow-xl"> {/* 70% width */}
+                    <div className="flex items-center md:items-start space-x-4 flex-col md:flex-row">
                         <div className="flex-shrink-0">
                             <div className="w-16 h-16 rounded-full bg-gray-300 flex items-center justify-center text-gray-500">
                                 <span className="text-xl">SD</span>
@@ -15,9 +14,9 @@ const AboutMe = () => {
                         </div>
 
                         <div className="flex-1"> {/* Takes remaining space */}
-                            <h3 className="text-xl font-bold text-gray-800">Solange Duhimbaze Iihrwe</h3>
+                            <h3 className="text-xl font-bold text-gray-800">Solange Duhimbaze Ihirwe</h3>
                             <p className="text-gray-600 mb-3">
-                                Full-Stack Developer | Technical Writer | Open-Source Contributor
+                                Full-Stack Developer | Technical Support | Open-Source Contributor
                             </p>
 
                             <div className="prose prose-sm text-gray-700">

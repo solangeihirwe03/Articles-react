@@ -49,7 +49,7 @@ const ArticleDetail = () => {
     if (error) return <p>Error: {error}</p>;
     return (
         <Container>
-            <div className='flex justify-center flex-col items-center mt-10'>
+            <div className='flex justify-center flex-col items-center mt-20 md:mt-5'>
                 <h1 className='font-inknut text-lg font-semibold'>{article?.title}</h1>
                 <div className='flex justify-end w-full mb-6'>
                     <Link to={`/update-article/${article?.id}`}>
@@ -60,12 +60,12 @@ const ArticleDetail = () => {
                     </button>
                 </div>
 
-                <div className='flex gap-10 items-center justify-center'>
-                    <img src={article?.imageUrl} alt={article?.title} className='w-[40%] h-[65vh]' />
-                    <p className='w-[40%]'>{article?.description}</p>
+                <div className='flex gap-5 md:gap-10 items-center justify-center flex-col md:flex-row mb-3'>
+                    <img src={article?.imageUrl} alt={article?.title} className='md:w-[40%] h-[45vh] md:h-[30vh] lg:h-[40vh] xl:h-[65vh]' />
+                    <p className='lg:w-[40%]'>{article?.description}</p>
                 </div>
             </div>
-            <div className="flex justify-center flex-col pl-24">
+            <div className="flex justify-center flex-col lg:pl-16 xl:pl-24">
                 <h2 className="text-lg font-semibold">Comments</h2>
                 {comments.length > 0 ? (
                     comments.map((comment) => (

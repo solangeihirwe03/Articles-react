@@ -102,10 +102,10 @@ const CreateArticle = () => {
                     onClose={() => setPopup(null)}
                 />
             )}
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className='mt-20 md:mt-4'>
                 <h1 className='text-2xl font-semibold text-[#1E3A8A] mb-6 text-center'>Create article</h1>
-                <div className='bg-white max-w-[70%] mx-auto p-6  rounded-lg shadow-md text-gray-900'>
-                    <div className='space-y-6 flex gap-8 items-end justify-center'>
+                <div className='bg-white lg:max-w-[70%] mx-auto p-6  rounded-lg shadow-md text-gray-900'>
+                    <div className='space-y-6 flex md:gap-8 lg:items-end justify-center flex-col md:flex-row'>
                         <div className='space-y-4 flex flex-col gap-3'>
                             <input
                                 type="text"
@@ -113,7 +113,7 @@ const CreateArticle = () => {
                                 value={data.title}
                                 onChange={handleChange}
                                 placeholder='Title...'
-                                className='border-[1.5px] border-[#1E3A8A] w-[20vw] outline-none px-4 h-16 rounded-md'
+                                className='border-[1.5px] border-[#1E3A8A] lg:w-[20vw] outline-none px-4 h-10 lg:h-12 rounded-md'
                             />
                             <textarea
                                 name="description"
@@ -121,7 +121,7 @@ const CreateArticle = () => {
                                 onChange={handleChange}
                                 placeholder="Description..."
                                 rows={4}
-                                className='border-[1.5px] border-[#1E3A8A] w-[20vw] outline-none h-32 rounded-md focus:outline-none resize-none [&::-webkit-scrollbar]:hidden px-4 py-2'
+                                className='border-[1.5px] border-[#1E3A8A] lg:w-[20vw] outline-none h-32 rounded-md focus:outline-none resize-none [&::-webkit-scrollbar]:hidden px-4 py-2'
                             />
                         </div>
                         <div>
@@ -172,7 +172,7 @@ const CreateArticle = () => {
                     <div className="flex justify-center pt-4">
                         <button
                             type="submit"
-                            className="px-6 py-2 bg-[#1E3A8A] text-white font-medium rounded-md hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 my-3"
+                            className="px-6 py-2 bg-[#1E3A8A] text-white font-medium rounded-md hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 my-3 w-full md:w-[69vw] lg:w-[20vw]"
                         >
                             Create Article
                         </button>

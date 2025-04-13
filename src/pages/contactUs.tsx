@@ -67,35 +67,34 @@ const ContactUs = () => {
                     onClose={() => setPopup(null)}
                 />
             )}
-            <div className="flex justify-between mx-40 px-16 mt-9 bg-gray-300 py-8 rounded-full font-inknut">
+            <div className="flex justify-between md:w-[67vw] md:mx-28 gap-3 lg:mx-40 px-16 mt-20 md:mt-9 bg-gray-300 py-8 rounded-full font-inknut ">
                 <div className="flex items-center flex-col">
-                    <div className="p-7 rounded-full bg-[#1E3A8A]">
-                        <ImLocation2 size={35} color="white"/>
+                    <div className="p-4 md:p-7 rounded-full bg-[#1E3A8A]">
+                        <ImLocation2 color="white" className="text-xl"/>
                     </div>
-                    <h2 className="block font-semibold">KN 72 rd</h2>
-                    <h2 className="block font-semibold">KN 72 rd</h2>
+                    <h2 className="block font-semibold text-sm">KN 72 rd</h2>
                 </div>
                 <a 
                 href={`mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(defaultBody)}`}
                 className="flex items-center flex-col"
                 >
-                    <div className="p-7 rounded-full bg-[#1E3A8A]">
-                        <MdMarkEmailUnread size={35} color="white"/>
+                    <div className="p-4 md:p-7 rounded-full bg-[#1E3A8A]">
+                        <MdMarkEmailUnread color="white" className="text-xl"/>
                     </div>
-                    <h2>{email}</h2>
+                    <h2 className="hidden md:block">{email}</h2>
                 </a>
                 <div className="flex items-center flex-col">
-                    <div className="p-7 rounded-full bg-[#1E3A8A]">
-                        <FaPhoneAlt size={35} color="white"/>
+                    <div className="p-4 md:p-7 rounded-full bg-[#1E3A8A]">
+                        <FaPhoneAlt color="white" className="text-xl"/>
                     </div>
-                    <h2 className="block font-semibold">+250787113254</h2>
+                    <h2 className="block font-semibold text-sm">+250787113254</h2>
                 </div>
             </div>
             <form onSubmit={formik.handleSubmit} className="w-full flex mt-10 items-center justify-center ">
-                <div className="bg-white flex flex-col items-center justify-center shadow-lg p-10 rounded-2xl w-[75%]">
+                <div className="bg-white flex flex-col items-center justify-center shadow-lg p-10 rounded-2xl lg:w-[75%]">
                     <h1 className="text-3xl font-semibold pb-2">Contact Us</h1>
                     <p className="text-lg pb-2">Any questions or remarks? Just write us message!</p>
-                    <div className="flex gap-10 mb-3">
+                    <div className="flex md:gap-10 mb-3 flex-col lg:flex-row">
                         <div className="">
                             <label
                                 htmlFor="email"
@@ -109,7 +108,7 @@ const ContactUs = () => {
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
                                 value={formik.values.email}
-                                className="border-none outline-none w-[15vw] py-1.5 px-4 rounded-3xl bg-gray-200"
+                                className="border-none outline-none lg:w-[15vw] py-1.5 px-4 rounded-3xl bg-gray-200"
                                 placeholder="enter valid email..."
                             />
                             {formik.touched.email && formik.errors.email && (
@@ -129,7 +128,7 @@ const ContactUs = () => {
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
                                 value={formik.values.username}
-                                className="border-none outline-none w-[15vw] py-1.5 px-4 rounded-3xl bg-gray-200"
+                                className="border-none outline-none lg:w-[15vw] py-1.5 px-4 rounded-3xl bg-gray-200"
                                 placeholder="enter username..."
                             />
                             {formik.touched.username && formik.errors.username && (
@@ -152,7 +151,7 @@ const ContactUs = () => {
                             value={formik.values.message}
                             placeholder="send message"
                             rows={4}
-                            className="border-none outline-none w-[34vw] py-1.5 px-4 rounded-3xl bg-gray-200 [&::-webkit-scrollbar]:hidden"
+                            className="border-none outline-none w-[78vw] md:w-[34vw] py-1.5 px-4 rounded-3xl bg-gray-200 [&::-webkit-scrollbar]:hidden"
                         />
                         {formik.touched.message && formik.errors.message && (
                             <div className="text-red-500 text-sm mt-1">{formik.errors.message}</div>
@@ -161,7 +160,7 @@ const ContactUs = () => {
                     <button
                         type="submit"
                         disabled={formik.isSubmitting}
-                        className="w-[34vw] py-1.5 px-4 bg-[#1E3A8A] text-white text-lg rounded-2xl my-3"
+                        className="w-full md:w-[34vw] py-1.5 px-4 bg-[#1E3A8A] text-white text-lg rounded-2xl my-3"
                     >
                         {formik.isSubmitting ? "Sending..." : "Submit"}
                     </button>

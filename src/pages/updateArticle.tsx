@@ -113,12 +113,12 @@ const UpdateArticle = () => {
                 />
             )}
             <form
-                className=''
+                className='mt-20 md:mt-5'
                 onSubmit={handleUpdate}
             >
                 <h1 className="text-2xl font-semibold text-[#1E3A8A] mb-6 text-center">Update Article</h1>
-                <div className='bg-white max-w-[70%] mx-auto p-6  rounded-lg shadow-md text-gray-800'>
-                    <div className='space-y-6 flex gap-8 items-end justify-center'>
+                <div className='bg-white lg:max-w-[70%] mx-auto p-6  rounded-lg shadow-md text-gray-800'>
+                    <div className='space-y-6 flex gap-8 md:items-end justify-center flex-col w-full md:flex-row'>
                         <div className='space-y-4 flex flex-col gap-3'>
                             <input
                                 type="text"
@@ -126,7 +126,7 @@ const UpdateArticle = () => {
                                 value={article?.title}
                                 onChange={handleChange}
                                 placeholder='Title...'
-                                className='border-[1.5px] border-[#1E3A8A] w-[20vw] outline-none px-4 h-16 rounded-md'
+                                className='border-[1.5px] border-[#1E3A8A] lg:w-[20vw] outline-none px-4 h-12 lg:h-16 rounded-md'
                             />
                             <textarea
                                 name="description"
@@ -134,7 +134,7 @@ const UpdateArticle = () => {
                                 onChange={handleChange}
                                 placeholder="Description..."
                                 rows={4}
-                                className='border-[1.5px] border-[#1E3A8A] w-[20vw] outline-none h-32 rounded-md focus:outline-none resize-none [&::-webkit-scrollbar]:hidden px-4 py-2'
+                                className='border-[1.5px] border-[#1E3A8A] lg:w-[20vw] outline-none h-32 rounded-md focus:outline-none resize-none [&::-webkit-scrollbar]:hidden px-4 py-2'
                             />
                         </div>
                         <div>

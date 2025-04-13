@@ -25,6 +25,7 @@ const Home = () => {
 
     useEffect(() => {
         const fetchArticles = async () => {
+            setIsLoading(true);
             try {
                 const response = await axiosInstance.get("/api/article/all-articles");
                 setArticles(response.data.data.articles)
@@ -101,11 +102,11 @@ const Home = () => {
     if (error) return <p>Error: {error}</p>;
 
     return (
-        <div>
+        <div className='mt-12'>
             <Container>
                 {popupMessage && popupType && <Popup message={popupMessage} type={popupType} onClose={() => setPopupMessage(null)} />}
                 <div className='flex justify-end'>
-                    <Link to={"/create-article"} className='text-right mb-12 mt-8 px-6 py-2.5 bg-white text-[#1E3A8A] border-[#1E3A8A] border-[1.5px] rounded-xl'>
+                    <Link to={"/create-article"} className='text-right mb-12 mt-8 md:mt-0 px-6 py-2.5 bg-white text-[#1E3A8A] border-[#1E3A8A] border-[1.5px] rounded-xl'>
                         + Create Article
                     </Link>
                 </div>
@@ -114,10 +115,10 @@ const Home = () => {
                         <p>No articles available.</p>
                     ) : (
                         articles.map((article) => (
-                            <div key={article.id} className="w-[30%] p-4 border rounded-lg shadow-md h-[55vh] bg-white flex flex-col justify-center items-center">
+                            <div key={article.id} className="w-full md:w-[30%] p-4 border rounded-lg shadow-md md:h-[70vh] xxl:h-[55vh] bg-white flex flex-col justify-center items-center">
                                 <Link to={`/article/${article.id}`}>
                                     <h2 className="text-xl font-semibold font-inknut pb-4">{article.title}</h2>
-                                    <img src={article.imageUrl} alt={article.title} className="w-full h-40 object-cover rounded mb-2" />
+                                    <img loading="lazy" src={article.imageUrl} alt={article.title} className="w-full h-40 object-cover rounded mb-2" />
                                     <p className='line-clamp-3 overflow-hidden text-ellipsis mb-2'>{article.description}</p>
                                 </Link>
 

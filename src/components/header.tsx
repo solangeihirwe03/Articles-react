@@ -7,15 +7,19 @@ import { IArticle } from '../utils/types/article';
 import axiosInstance from '../utils/axios/axiosInstance';
 import { searchArticles } from '../utils/search';
 
-const MobileMenu: React.FC = () => {
+interface MobileMenuProps {
+    onLinkClick: () => void;
+  }
+
+const MobileMenu: React.FC<MobileMenuProps> = ({onLinkClick}) => {
     return (
         <div className='bg-[#9c9c9c] mobile-nav'>
             <nav className='flex flex-col gap-8 text-lg font-semibold px-10 text-white'>
-                <NavLink to={'/'}>Home</NavLink>
-                <NavLink to={'/about-me'}>About Us</NavLink>
-                <NavLink to={'/create-article'}>article</NavLink>
-                <NavLink to={'/contact-us'}>Contact Us</NavLink>
-                <NavLink to={"/login"}>Login</NavLink>
+                <NavLink to={'/'} onClick={onLinkClick}>Home</NavLink>
+                <NavLink to={'/about-me'} onClick={onLinkClick}>About Us</NavLink>
+                <NavLink to={'/create-article'} onClick={onLinkClick}>article</NavLink>
+                <NavLink to={'/contact-us'} onClick={onLinkClick}>Contact Us</NavLink>
+                <NavLink to={"/login"} onClick={onLinkClick}>Login</NavLink>
             </nav>
             <div className='bg-white border border-[#1E3A8A] rounded-[22px] flex justify-center items-center text-[#1E1E1E]'>
                 <input
@@ -100,12 +104,14 @@ function Header() {
                 </div>
                 {isMenuOpen && (
                     <div className='absolute z-50 top-10 right-0'>
-                        <MobileMenu />
+                        <MobileMenu 
+                        onLinkClick={toogleMenu}
+                        />
                     </div>
                 )}
 
             </div>
-            <div className='md:mt-56 lg:mt-72 xl:mt-[24rem] 2xl:mt-[16rem] md:flex justify-between md:px-10 lg:px-20 hidden'>
+            <div className='md:mt-[21rem] xl:mt-[26rem] 2xl:mt-[16rem] md:flex justify-between md:px-10 lg:px-20 hidden'>
                 <nav className='flex gap-8 text-lg lg:text-xl font-semibold '>
                     <NavLink to={'/'}>Home</NavLink>
                     <NavLink to={'/about-me'}>About Us</NavLink>
