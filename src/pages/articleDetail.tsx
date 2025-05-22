@@ -1,52 +1,53 @@
-import { useEffect, useState } from 'react'
 import Container from '../components/styleComponent'
 import { useNavigate, useParams } from 'react-router-dom'
-import { IArticle, IComment } from '../utils/types/article';
+import { IArticle} from '../utils/types/article';
 import axiosInstance from '../utils/axios/axiosInstance';
 import { Link } from 'react-router-dom';
 import edit from "/edit.svg";
 import remove from "/Remove.svg"
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
+const fetchArticleById = async(articleId: string): Promise<IArticle>=>{
+    const response = await axiosInstance.get(`/api/article/user-get-article/${articleId}`)
+    return response.data.data.article
+}
+
+const deleteArticleById = async(articleId: string)=>{
+    await axiosInstance.delete(`/api/article/delete-article/${articleId}`)
+}
 
 const ArticleDetail = () => {
     const { articleId } = useParams();
-    const [article, setArticle] = useState<IArticle | null>(null);
-    const [loading, setLoading] = useState(true)
-    const [error, setError] = useState("");
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const queryClient = useQueryClient();
 
-    const [comments, setComments] = useState<IComment[]>([]);
-
-    useEffect(() => {
-        const fetchArticle = async () => {
-            try {
-                const response = await axiosInstance.get(`/api/article/user-get-article/${articleId}`)
-                setArticle(response.data.data.article)
-                setComments(response.data.data.article.comments || []);
-            } catch (err: any) {
-                setError(err.message)
-            } finally {
-                setLoading(false)
-            }
+    const {
+        data: article,
+        isLoading,
+        isError,
+        error
+    } = useQuery<IArticle>({
+        queryKey: ['article', articleId],
+        queryFn: () => fetchArticleById(articleId!),
+        enabled: !!articleId,
+        staleTime: 1000 * 60 * 5,
+        gcTime: 1000 * 60 * 10
+    })
+    const deleteMutation = useMutation({
+        mutationFn: ()=> deleteArticleById(articleId!),
+        onSuccess: ()=>{
+            queryClient.invalidateQueries({queryKey: ["article"]});
+            navigate('/');
         }
-        fetchArticle();
-    }, [])
+    })
 
     const handleDelete = async () => {
-        if (!article) return;
-
-        setArticle(null);
-
-        try {
-            await axiosInstance.delete(`/api/article/delete-article/${articleId}`);
-            navigate('/');
-        } catch (err: any) {
-            setArticle(article);
-        }
+        deleteMutation.mutate();
     };
+    
 
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error: {error}</p>;
+    if (isLoading) return <p className='pl-32'>Loading...</p>;
+    if (error) return <p>Error: {isError}</p>;
     return (
         <Container>
             <div className='flex justify-center flex-col items-center mt-20 md:mt-5'>
@@ -67,8 +68,8 @@ const ArticleDetail = () => {
             </div>
             <div className="flex justify-center flex-col lg:pl-16 xl:pl-24">
                 <h2 className="text-lg font-semibold">Comments</h2>
-                {comments.length > 0 ? (
-                    comments.map((comment) => (
+                {(article?.comments?.length?? 0) ? (
+                    article?.comments?.map((comment) => (
                         <div key={comment.id} className="border-b py-2">
                             <p>{comment.comment}</p>
                         </div>

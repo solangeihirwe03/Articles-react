@@ -5,10 +5,19 @@ import { IArticle } from '../utils/types/article'
 import axiosInstance from '../utils/axios/axiosInstance'
 import { FormValues } from './createArticle'
 import Popup from '../components/popUp'
+import { useQuery } from '@tanstack/react-query'
 
 const UpdateArticle = () => {
     const { articleId } = useParams<{ articleId: string }>();
     const navigate = useNavigate();
+    const {data: fetchedArticle } = useQuery({
+        queryKey: ['article', articleId],
+        queryFn: async () => {
+            const response = await axiosInstance.get(`/api/article/user-get-article/${articleId}`);
+            return response.data.data.article;
+        },
+        staleTime: 1000 * 60 * 5,
+    })
     const [article, setArticle] = useState<FormValues | null>({
         title: "",
         description: "",
@@ -22,26 +31,15 @@ const UpdateArticle = () => {
     const [initialData, setInitialData] = useState<IArticle | null>(null);
     const [newImage, setNewImage] = useState<File | null>(null);
     const [imagePreview, setImagePreview] = useState<string | null>(null);
-
+    
     useEffect(() => {
-        const fetchArticle = async () => {
-            try {
-                const response = await axiosInstance.get(`/api/article/user-get-article/${articleId}`)
-                setArticle(response.data.data.article)
-                setInitialData(response.data.data.article);
-                if (response.data.data.article.imageUrl) {
-                    setImagePreview(response.data.data.article.imageUrl);
-                }
-            } catch (err: any) {
-                setPopup({
-                    show:true,
-                    type: "error",
-                    message:err.message
-                })
-            }
+        if(fetchedArticle){
+            const {title, description, imageUrl} = fetchedArticle;
+            setArticle({title, description, image: null});
+            setInitialData(fetchedArticle);
+            setImagePreview(imageUrl || null)
         }
-        fetchArticle();
-    }, []);
+    }, [fetchedArticle]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
@@ -71,7 +69,7 @@ const UpdateArticle = () => {
             setPopup({
                 show: true,
                 type: "error",
-                message:'You must update at least one field (title, description, or image).'
+                message: 'You must update at least one field (title, description, or image).'
             });
             return;
         }
@@ -91,14 +89,14 @@ const UpdateArticle = () => {
             setPopup({
                 show: true,
                 type: "error",
-                message:'Article updated successfully!'
+                message: 'Article updated successfully!'
             });
             navigate(`/article/${articleId}`);
         } catch (error) {
             setPopup({
-                show:true,
-                type:"error",
-                message:'Error updating article'
+                show: true,
+                type: "error",
+                message: 'Error updating article'
             });
         }
     };
