@@ -1,42 +1,39 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import Container from '../components/styleComponent'
-import { IArticle } from '../utils/types/article';
+import { IArticle} from '../utils/types/article';
 import axiosInstance from '../utils/axios/axiosInstance';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { PulseLoader } from "react-spinners";
 import Popup from '../components/popUp';
 import { MdSend, MdClose } from "react-icons/md";
+import { useQuery } from '@tanstack/react-query';
+
+const fetchArticles = async(): Promise<IArticle[]>=>{
+    const response = await axiosInstance.get("/api/article/all-articles")
+    return response.data.data.articles
+}
 
 const Home = () => {
-
-    const [articles, setArticles] = useState<IArticle[]>([])
-    const [isLoading, setIsLoading] = useState(false)
-    const [error, setError] = useState<string | null>(null)
+    const {
+        data: articles,
+        isLoading,
+        error
+    } = useQuery<IArticle[]>({
+        queryKey: ['articles'],
+        queryFn: fetchArticles,
+        staleTime: 1000 * 60 * 5
+    })
+    const [isError, setIsError] = useState<string | null>(null)
 
     const [popupMessage, setPopupMessage] = useState<string | null>(null);
     const [popupType, setPopupType] = useState<"success" | "error" | null>(null);
 
     const [comments, setComments] = useState<{ [key: string]: string }>({});
     const [commentVisible, setCommentVisible] = useState<{ [key: string]: boolean }>({});
+
     const navigate = useNavigate();
-
     const token = localStorage.getItem("token");
-
-    useEffect(() => {
-        const fetchArticles = async () => {
-            setIsLoading(true);
-            try {
-                const response = await axiosInstance.get("/api/article/all-articles");
-                setArticles(response.data.data.articles)
-            } catch (err: any) {
-                setError(err.message)
-            } finally {
-                setIsLoading(false)
-            }
-        };
-        fetchArticles();
-    }, []);
 
     const handleCommentChange = (articleId: string, event: React.ChangeEvent<HTMLInputElement>) => {
         setComments({
@@ -60,9 +57,10 @@ const Home = () => {
                 ...comments,
                 [articleId]: "",
             });
-        } catch (error) {
+        } catch (error: any) {
             setPopupMessage("Error adding comment. Please try again.");
             setPopupType("error");
+            setIsError(error)
         }
     };
 
@@ -99,7 +97,7 @@ const Home = () => {
         );
     }
 
-    if (error) return <p>Error: {error}</p>;
+    if (error) return <p>Error: {isError}</p>;
 
     return (
         <div className='mt-12'>
@@ -111,10 +109,10 @@ const Home = () => {
                     </Link>
                 </div>
                 <div className="w-full flex flex-wrap gap-4 items-center justify-center">
-                    {articles.length === 0 ? (
+                    {articles?.length === 0 ? (
                         <p>No articles available.</p>
                     ) : (
-                        articles.map((article) => (
+                        articles?.map((article) => (
                             <div key={article.id} className="w-full md:w-[30%] p-4 border rounded-lg shadow-md md:h-[70vh] xxl:h-[55vh] bg-white flex flex-col justify-center items-center">
                                 <Link to={`/article/${article.id}`}>
                                     <h2 className="text-xl font-semibold font-inknut pb-4">{article.title}</h2>
